@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 
 function ProductCard({ product }) {
   const { addItem } = useCart();
@@ -42,7 +42,7 @@ function ProductCard({ product }) {
         <span className="text-xs text-gray-500 uppercase tracking-wide">{product.category}</span>
 
         <Link to={`/produto/${product.id}`}>
-          <h3 className="font-semibold text-gray-800 mt-1 group-hover:text-indigo-600 transition-colors line-clamp-2 min-h-[2.5rem]">
+          <h3 className="font-semibold text-gray-800 mt-1 group-hover:text-indigo-600 transition-colors line-clamp-2 min-h-10">
             {product.name}
           </h3>
         </Link>
