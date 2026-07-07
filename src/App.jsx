@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import Header from './components/Header'
+import Footer from './components/Footer'
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <CartProvider>
         <Header />
         <Outlet />
+        <Footer />
       </CartProvider>
     </>
   )

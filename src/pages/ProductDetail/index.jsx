@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import { getProductById } from '../../services/api';
 import { useCart } from '../../context/CartContext';
 
 function ProductDetail() {
   const { id } = useParams();
+  const { addItem } = useCart();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const { addItem } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
 
   useEffect(() => {
     async function loadProduct() {
@@ -18,7 +20,7 @@ function ProductDetail() {
         setLoading(true);
         const data = await getProductById(id);
         setProduct(data);
-        setQuantity(1); // reseta a quantidade sempre que trocar de produto
+        setQuantity(1);
       } catch (err) {
         setError('Não foi possível carregar este produto.');
       } finally {
@@ -37,6 +39,12 @@ function ProductDetail() {
     setQuantity((prev) => Math.min(product.stock, prev + 1));
   }
 
+  function handleAddToCart() {
+    addItem(product, quantity);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 2000);
+  }
+
   if (loading) {
     return <p className="text-center mt-10">Carregando produto...</p>;
   }
@@ -52,6 +60,9 @@ function ProductDetail() {
     );
   }
 
+  const isOutOfStock = product.stock === 0;
+  const isLowStock = product.stock > 0 && product.stock <= 5;
+
   const formattedPrice = product.price.toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL',
@@ -59,31 +70,49 @@ function ProductDetail() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <Link to="/" className="text-indigo-600 hover:underline text-sm">
-        &larr; Voltar para a loja
+      <Link
+        to="/"
+        className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-md transition-colors -ml-3"
+      >
+        <ArrowLeft size={16} />
+        Voltar para a loja
       </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-4">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full rounded-lg shadow-md object-cover"
-        />
+        <div className="relative">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full rounded-xl shadow-md object-cover border border-gray-100"
+          />
+
+          {isOutOfStock && (
+            <span className="absolute top-4 left-4 bg-gray-900/80 text-white text-xs font-semibold px-3 py-1.5 rounded-md">
+              Esgotado
+            </span>
+          )}
+
+          {!isOutOfStock && isLowStock && (
+            <span className="absolute top-4 left-4 bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-md">
+              Últimas unidades
+            </span>
+          )}
+        </div>
 
         <div className="flex flex-col">
-          <span className="text-xs text-gray-500 uppercase">{product.category}</span>
+          <span className="text-xs text-gray-500 uppercase tracking-wide">{product.category}</span>
           <h1 className="text-2xl font-bold text-gray-900 mt-1">{product.name}</h1>
 
           <p className="text-3xl font-bold text-gray-900 mt-4">{formattedPrice}</p>
 
           <p className="text-gray-600 mt-4 leading-relaxed">{product.description}</p>
 
-          <div className="mt-4 text-sm text-gray-500 space-y-1">
-            {product.brand && <p><strong>Marca:</strong> {product.brand}</p>}
-            {product.gender && <p><strong>Gênero:</strong> {product.gender}</p>}
-            {product.color && <p><strong>Cor:</strong> {product.color}</p>}
+          <div className="mt-4 text-sm text-gray-500 space-y-1 border border-indigo-100 rounded-lg p-4">
+            {product.brand && <p><strong className="text-gray-700">Marca:</strong> {product.brand}</p>}
+            {product.gender && <p><strong className="text-gray-700">Gênero:</strong> {product.gender}</p>}
+            {product.color && <p><strong className="text-gray-700">Cor:</strong> {product.color}</p>}
             <p>
-              <strong>Estoque:</strong>{' '}
+              <strong className="text-gray-700">Estoque:</strong>{' '}
               {product.stock > 0 ? `${product.stock} unidades disponíveis` : 'Esgotado'}
             </p>
           </div>
@@ -92,20 +121,20 @@ function ProductDetail() {
           <div className="flex items-center gap-4 mt-6">
             <span className="font-medium text-gray-700">Quantidade:</span>
 
-            <div className="flex items-center border border-gray-300 rounded-md">
+            <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
               <button
                 onClick={handleDecrease}
-                className="px-3 py-1 text-lg hover:bg-gray-100"
+                className="px-3 py-2 text-lg hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-white transition-colors"
                 disabled={quantity <= 1}
               >
-                -
+                −
               </button>
 
-              <span className="px-4">{quantity}</span>
+              <span className="px-4 font-medium">{quantity}</span>
 
               <button
                 onClick={handleIncrease}
-                className="px-3 py-1 text-lg hover:bg-gray-100"
+                className="px-3 py-2 text-lg hover:bg-gray-100 disabled:opacity-30 disabled:hover:bg-white transition-colors"
                 disabled={quantity >= product.stock}
               >
                 +
@@ -114,11 +143,19 @@ function ProductDetail() {
           </div>
 
           <button
-            onClick={() => addItem(product, quantity)}
-            className="mt-6 w-full md:w-auto bg-indigo-600 text-white px-8 py-3 rounded-md hover:bg-indigo-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-            disabled={product.stock === 0}
-            >
-            Adicionar ao carrinho
+            onClick={handleAddToCart}
+            className={`mt-6 w-full md:w-auto px-8 py-3 rounded-lg font-medium transition-all active:scale-95 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:active:scale-100 ${
+              justAdded
+                ? 'bg-green-600 text-white'
+                : 'bg-indigo-600 text-white hover:bg-indigo-700'
+            }`}
+            disabled={isOutOfStock}
+          >
+            {isOutOfStock
+              ? 'Indisponível'
+              : justAdded
+              ? '✓ Adicionado ao carrinho!'
+              : 'Adicionar ao carrinho'}
           </button>
         </div>
       </div>

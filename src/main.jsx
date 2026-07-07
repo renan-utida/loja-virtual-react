@@ -6,12 +6,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home/index.jsx'
 import ProductDetail from './pages/ProductDetail/index.jsx'
 import Cart from './pages/Cart/index.jsx'
+import Error from './pages/Error/index.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    // errorElement: <Error/>,
+    errorElement: <Error />,
     children: [
       { path: '/', element: <Home /> },
       { path: '/produto/:id', element: <ProductDetail />},
