@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
-import { getProducts } from './services/api';
+import { Outlet } from 'react-router-dom'
 
 function App() {
-  useEffect(() => {
-    getProducts().then(data => console.log(data));
-  }, []);
-
-  return <div>Testando...</div>;
+  return (
+    <>
+      <Outlet />
+    </>
+  )
 }
 
-export default App;
+export default App
