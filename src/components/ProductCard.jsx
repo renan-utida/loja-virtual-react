@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 function ProductCard({ product }) {
+  const { addItem } = useCart();
+
   const formattedPrice = product.price.toLocaleString('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   });
+
+  function handleAddToCart() {
+    addItem(product);
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
@@ -28,6 +35,7 @@ function ProductCard({ product }) {
         <p className="text-lg font-bold text-gray-900 mt-2">{formattedPrice}</p>
 
         <button
+          onClick={handleAddToCart}
           className="mt-auto pt-4 w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors"
         >
           Adicionar ao carrinho

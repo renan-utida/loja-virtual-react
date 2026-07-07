@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getProductById } from '../../services/api';
+import { useCart } from '../../context/CartContext';
 
 function ProductDetail() {
   const { id } = useParams();
@@ -9,6 +10,7 @@ function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCart();
 
   useEffect(() => {
     async function loadProduct() {
@@ -112,9 +114,10 @@ function ProductDetail() {
           </div>
 
           <button
+            onClick={() => addItem(product, quantity)}
             className="mt-6 w-full md:w-auto bg-indigo-600 text-white px-8 py-3 rounded-md hover:bg-indigo-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
             disabled={product.stock === 0}
-          >
+            >
             Adicionar ao carrinho
           </button>
         </div>
