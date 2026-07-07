@@ -1,0 +1,100 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Tênis Masculino Nike Revolution 8",
+            "price": 349.99,
+            "image": "/images/products/tenis-nike.png",
+            "description": "Tênis esportivo leve, ideal para corridas de longa distância e com amortecimento reforçado.",
+            "category": "Calçados",
+            "brand": "Nike",
+            "gender": "Masculino",
+            "color": "Preto",
+            "stock": 12
+        },
+        {
+            "id": 2,
+            "name": "Camiseta Masculina Nike Dri-Fit Legend",
+            "price": 89.99,
+            "image": "/images/products/camiseta-nike.png",
+            "description": "Camiseta esportiva com tecido de secagem rápida, ideal para treinos intensos e dias quentes.",
+            "category": "Vestuário",
+            "brand": "Nike",
+            "gender": "Masculino",
+            "color": "Preto",
+            "stock": 30
+        },
+        {
+            "id": 3,
+            "name": "Smartwatch Condor com Monitor Cardíaco",
+            "price": 299.99,
+            "image": "/images/products/smartwatch-condor.png",
+            "description": "Smartwatch com monitor cardíaco, GPS integrado e bateria de longa duração para acompanhar seus treinos.",
+            "category": "Acessórios",
+            "brand": "Condor",
+            "gender": "Unissex",
+            "color": "Azul",
+            "stock": 8
+        },
+        {
+            "id": 4,
+            "name": "Mochila Hurley Reforçada Impermeável 16L",
+            "price": 129.99,
+            "image": "/images/products/mochila-hurley.png",
+            "description": "Mochila resistente à água, com compartimento para garrafas e espaço para notebook.",
+            "category": "Acessórios",
+            "brand": "Hurley",
+            "gender": "Unissex",
+            "color": "Preto",
+            "stock": 15
+        },
+        {
+            "id": 5,
+            "name": "Boné Unissex Adidas - Branco",
+            "price": 109.99,
+            "image": "/images/products/bone-adidas.png",
+            "description": "Boné leve, com ajuste traseiro e proteção UV para dias de sol intenso.",
+            "category": "Vestuário",
+            "brand": "Adidas",
+            "gender": "Unissex",
+            "color": "Azul",
+            "stock": 25
+        },
+        {
+            "id": 6,
+            "name": "Garrafa Térmica Oxer com Alça 600 ml",
+            "price": 79.99,
+            "image": "/images/products/garrafa-termica.png",
+            "description": "Garrafa térmica que mantém a temperatura por até 12 horas, ideal para treinos ao ar livre.",
+            "category": "Acessórios",
+            "brand": "Oxer",
+            "gender": "Unissex",
+            "color": "Preto",
+            "stock": 20
+        },
+        {
+            "id": 7,
+            "name": "Tênis adidas Grand Court 2.0 - Masculino",
+            "price": 279.99,
+            "image": "/images/products/tenis-adidas-branco.png",
+            "description": "Tênis confortável para o dia a dia, com design moderno e material sustentável.",
+            "category": "Calçados",
+            "brand": "Adidas",
+            "gender": "Masculino",
+            "color": "Branco",
+            "stock": 18
+        },
+        {
+            "id": 8,
+            "name": "Calça Legging adidas Train - Feminina",
+            "price": 189.99,
+            "image": "/images/products/legging-adidas.png",
+            "description": "Legging com tecido flexível que acompanha o movimento durante o treino.",
+            "category": "Vestuário",
+            "brand": "Adidas",
+            "gender": "Feminino",
+            "color": "Cinza",
+            "stock": 22
+        }
+    ]
+}
